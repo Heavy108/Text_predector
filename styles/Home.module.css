@@ -1,0 +1,10 @@
+.Text{
+    background-color: transparent;
+    /* width: 100vh; */
+    height: 100dvh;
+    width: 100%;
+}
+
+.Text:focus{
+    outline: none;
+}

@@ -5,7 +5,8 @@ import {
   NavbarBrand,
   NavbarItem,
 } from "@nextui-org/navbar";
-import { FaUserCircle } from "react-icons/fa";
+import { HiLightBulb } from "react-icons/hi";
+
 import { Link } from "@nextui-org/link";
 import NextLink from "next/link";
 import { siteConfig } from "@/config/site";
@@ -26,12 +27,12 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/dropdown";
+import { TbBulbOff } from "react-icons/tb";
 import { IoSettings } from "react-icons/io5";
 import { Switch } from "@nextui-org/react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { FaInfoCircle } from "react-icons/fa";
 import { useState } from "react";
-import { Avatar } from "@nextui-org/react";
 export const Navbar = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [darkMode, setDarkMode] = useState(true);
@@ -68,7 +69,7 @@ export const Navbar = () => {
         </NavbarContent>
 
         <NavbarContent
-          className="hidden sm:flex basis-1/5 sm:basis-full"
+          className="hidden sm:flex basis-1/5 sm:basis-full  gap-8"
           justify="end"
         >
           <NavbarItem className="hidden sm:flex gap-2">
@@ -99,25 +100,12 @@ export const Navbar = () => {
             </DropdownTrigger>
             <DropdownMenu
               aria-label="Settings"
-              onAction={() => {}}
+              
               closeOnSelect={false}
             >
               <DropdownItem key="darkMode">
-                <Switch
-                  isSelected={darkMode}
-                  onValueChange={() => handleSwitchChange("darkMode", darkMode)}
-                  size="lg"
-                  color="primary"
-                  thumbIcon={({ isSelected, className }) =>
-                    isSelected ? (
-                      <SunIcon className={className} />
-                    ) : (
-                      <MoonIcon className={className} />
-                    )
-                  }
-                >
-                  Dark Mode
-                </Switch>
+                
+                <ThemeSwitch/>
               </DropdownItem>
 
               <DropdownItem key="notifications">
@@ -130,13 +118,13 @@ export const Navbar = () => {
                   color="primary"
                   thumbIcon={({ isSelected, className }) =>
                     isSelected ? (
-                      <SunIcon className={className} />
+                      <HiLightBulb className={className} />
                     ) : (
-                      <MoonIcon className={className} />
+                      <TbBulbOff className={className}/>
                     )
                   }
                 >
-                  Notifications
+                  Suggestions
                 </Switch>
               </DropdownItem>
 

@@ -230,7 +230,7 @@ export const NextUILogo: React.FC<IconSvgProps> = (props) => {
 };
 
 export const MoonFilledIcon = ({
-  size = 24,
+  size = 20,
   width,
   height,
   ...props
@@ -252,7 +252,7 @@ export const MoonFilledIcon = ({
 );
 
 export const SunFilledIcon = ({
-  size = 24,
+  size = 20,
   width,
   height,
   ...props

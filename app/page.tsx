@@ -1,8 +1,11 @@
+import style from "@/styles/Home.module.css"
 export default function Home() {
   return (
    <>
    <div>
-    <h2>HI from the Basement</h2>
+    <textarea name="Text" placeholder="Start typing..." className={style.Text}>
+
+    </textarea>
    </div>
    </>
   );
