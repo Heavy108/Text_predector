@@ -1,10 +1,28 @@
 .Text{
     background-color: transparent;
     /* width: 100vh; */
-    height: 100dvh;
+    height: 50dvh;
     width: 100%;
 }
 
 .Text:focus{
     outline: none;
+}
+
+.MagicButton{
+    display: flex;
+    justify-content: center;
+}
+.Predict_output{
+    display: inline-block;
+    
+    border: 2px solid #fafafa;
+    color: aqua;
+    max-width: fit-content;
+    padding: 0.4rem;
+    margin: 0.2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    
+    
 }

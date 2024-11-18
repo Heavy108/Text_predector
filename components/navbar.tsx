@@ -35,15 +35,12 @@ import { FaInfoCircle } from "react-icons/fa";
 import { useState } from "react";
 export const Navbar = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [darkMode, setDarkMode] = useState(true);
   const [notifications, setNotifications] = useState(true);
   const [locationAccess, setLocationAccess] = useState(true);
 
   const handleSwitchChange = (settingName: string, currentValue: boolean) => {
     switch (settingName) {
-      case "darkMode":
-        setDarkMode(!currentValue);
-        break;
+      
       case "notifications":
         setNotifications(!currentValue);
         break;
@@ -115,7 +112,7 @@ export const Navbar = () => {
                     handleSwitchChange("notifications", notifications)
                   }
                   size="lg"
-                  color="primary"
+                  color="secondary"
                   thumbIcon={({ isSelected, className }) =>
                     isSelected ? (
                       <HiLightBulb className={className} />
@@ -124,7 +121,7 @@ export const Navbar = () => {
                     )
                   }
                 >
-                  Suggestions
+                  Multi-Suggestions
                 </Switch>
               </DropdownItem>
 
@@ -144,7 +141,7 @@ export const Navbar = () => {
                     )
                   }
                 >
-                  Location Access
+                  Romanization
                 </Switch>
               </DropdownItem>
             </DropdownMenu>

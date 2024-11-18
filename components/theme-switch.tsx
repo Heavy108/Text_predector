@@ -29,7 +29,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     <Switch
       isSelected={theme === "light" || isSSR}  // Use the current theme state to decide initial state
       size="lg"
-      color="primary"  // You can change the color of the switch here
+      color="default"  // You can change the color of the switch here
       onChange={(e) => onChange(e.target.checked)}  // Handle switch toggle
       thumbIcon={({ isSelected, className }) =>
         isSelected ? (
