@@ -5,7 +5,7 @@ import { Button } from "@nextui-org/react";
 
 export default function Home() {
   const [text, setText] = useState("");
-  const [predictions, setPredictions] = useState([]);
+  const [predictions, setPredictions] = useState([""]);
   const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [suggestion, setSuggestion] = useState(true); // State to toggle suggestion type
@@ -25,7 +25,7 @@ export default function Home() {
     }, 2000); // Simulate API call
   };
 
-  const handleSelectPrediction = (word) => {
+  const handleSelectPrediction = (word: string) => {
     setText((prev) => `${prev} ${word}`.trim());
     setPredictions([]);
     setShowButton(true);
