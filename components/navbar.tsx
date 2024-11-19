@@ -21,6 +21,7 @@ import {
   useDisclosure,
   Divider,
 } from "@nextui-org/react";
+import { useSettingsStore } from "@/store/useSettingsStore";
 import {
   Dropdown,
   DropdownTrigger,
@@ -35,14 +36,14 @@ import { FaInfoCircle } from "react-icons/fa";
 import { useState } from "react";
 export const Navbar = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [notifications, setNotifications] = useState(true);
+  // const [notifications, setNotifications] = useState(true);
   const [locationAccess, setLocationAccess] = useState(true);
+  const { notifications, toggleNotifications } = useSettingsStore();
 
   const handleSwitchChange = (settingName: string, currentValue: boolean) => {
     switch (settingName) {
-      
       case "notifications":
-        setNotifications(!currentValue);
+        // setNotifications(!currentValue);
         break;
       case "locationAccess":
         setLocationAccess(!currentValue);
@@ -60,7 +61,7 @@ export const Navbar = () => {
               href="/"
             >
               <Logo />
-              <p className="font-bold text-inherit">Text Predictor</p>
+              <p className="font-bold text-inherit">riTU</p>
             </NextLink>
           </NavbarBrand>
         </NavbarContent>
@@ -95,29 +96,22 @@ export const Navbar = () => {
                 <IoSettings className="text-[22px] cursor-pointer" />
               </button>
             </DropdownTrigger>
-            <DropdownMenu
-              aria-label="Settings"
-              
-              closeOnSelect={false}
-            >
+            <DropdownMenu aria-label="Settings" closeOnSelect={false}>
               <DropdownItem key="darkMode">
-                
-                <ThemeSwitch/>
+                <ThemeSwitch />
               </DropdownItem>
 
               <DropdownItem key="notifications">
                 <Switch
                   isSelected={notifications}
-                  onValueChange={() =>
-                    handleSwitchChange("notifications", notifications)
-                  }
+                  onValueChange={toggleNotifications}
                   size="lg"
                   color="secondary"
                   thumbIcon={({ isSelected, className }) =>
                     isSelected ? (
                       <HiLightBulb className={className} />
                     ) : (
-                      <TbBulbOff className={className}/>
+                      <TbBulbOff className={className} />
                     )
                   }
                 >

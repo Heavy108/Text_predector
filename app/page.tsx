@@ -2,14 +2,14 @@
 import { useState } from "react";
 import style from "@/styles/Home.module.css";
 import { Button } from "@nextui-org/react";
-
+import { useSettingsStore } from "@/store/useSettingsStore";
 export default function Home() {
   const [text, setText] = useState("");
   const [predictions, setPredictions] = useState([""]);
   const [loading, setLoading] = useState(false);
   const [showButton, setShowButton] = useState(true);
-  const [suggestion, setSuggestion] = useState(true); // State to toggle suggestion type
-
+  // const [suggestion, setSuggestion] = useState(true); 
+  const suggestion = useSettingsStore((state) => state.notifications);
   const handlePredict = () => {
     setLoading(true);
     setShowButton(false);
@@ -41,6 +41,7 @@ export default function Home() {
         onChange={(e) => setText(e.target.value)}
         className={style.Text}
       />
+      {/* <p>Multi-Suggestions: {notifications ? "Enabled" : "Disabled"}</p> */}
       <div className={style.MagicButton}>
         {showButton && (
           <Button color="primary" variant="shadow" onClick={handlePredict}>
