@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import style from "@/styles/Home.module.css";
 import { Button } from "@nextui-org/react";
 import { useSettingsStore } from "@/store/useSettingsStore";
@@ -12,22 +12,52 @@ export default function Home() {
   const [streaming, setStreaming] = useState(false);
 
   const suggestion = useSettingsStore((state) => state.notifications);
+  const [scales, setScales] = useState([1, 1, 1]);
 
-  const handlePredict = () => {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Simulate audio amplitude with random scaling
+      setScales([
+        Math.random() * 1.5 + 1,
+        Math.random() * 1.5 + 1,
+        Math.random() * 1.5 + 1,
+      ]);
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+  const handlePredict = async () => {
     setLoading(true);
     setShowButton(false);
     setPredictions([]);
     setStreaming(false);
-
-    // Simulate an API call delay
-    setTimeout(() => {
-      const exampleSuggestions = suggestion
-        ? ["word1", "word2", "word3", "word4"]
-        : ["word0"];
+  
+    try {
+      // Send input data and suggestion to the API
+      const response = await fetch("api/fetch", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ input: text, suggestion }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch predictions");
+      }
+  
+      const data = await response.json();
+      const exampleSuggestions = data.predictions || ["word0"]; // Fallback if no predictions returned
+  
       setLoading(false);
       startStreaming(exampleSuggestions); // Start streaming the predictions
-    }, 2000); // Simulate delay before predictions appear
+    } catch (error) {
+      console.error("Error fetching predictions:", error);
+      setLoading(false);
+      setShowButton(true); // Allow retry if an error occurs
+    }
   };
+  
 
   const startStreaming = (words: string[]) => {
     setStreaming(true);
@@ -82,12 +112,21 @@ export default function Home() {
       </div>
 
       {/* Loading State */}
-      {loading && <p className={style.LoadingText}>Generating predictions...</p>}
+      {loading && <div className={style.voiceAnimation}>
+      {scales.map((scale, index) => (
+        <div
+          key={index}
+          className={style.circle}
+          style={{ transform: `scale(${scale})` }}
+        ></div>
+      ))}
+    </div>}
 
       {/* Predictions Stream */}
       <div className={style.PredictionContainer}>
         {predictions.map((word, index) => (
-          <span
+          <Button
+          color="primary" variant="ghost"
             key={index}
             onClick={() => handleSelectPrediction(word)}
             className={`${style.PredictOutput} ${
@@ -95,7 +134,7 @@ export default function Home() {
             }`}
           >
             {word}
-          </span>
+          </Button>
         ))}
       </div>
     </div>
