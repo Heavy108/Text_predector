@@ -19,8 +19,8 @@
   
   .PredictOutput {
     display: inline-block;
-    border: 2px solid #fafafa;
-    color: aqua;
+    /* border: 2px solid #fafafa; */
+    /* color: aqua; */
     max-width: fit-content;
     padding: 0.4rem;
     margin: 0.2rem;
@@ -62,4 +62,40 @@
     font-size: 1.2rem;
     color: gray;
   }
+
+  .voiceAnimation {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .circle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #3498db;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite ease-in-out;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .circle:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  .circle:nth-child(3) {
+    animation-delay: 1s;
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
   
