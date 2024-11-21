@@ -168,7 +168,7 @@ export const Navbar = () => {
               <ModalBody>
                 <h4 className="text-lg text-gray-500">Project Guide</h4>
                 <h3 className="text-xl font-semibold">
-                  Prof. Shobhanjana Kalita
+                  Dr. Shobhanjana Kalita
                 </h3>
                 <Divider />
                 <h4 className="text-lg text-gray-500">Developers</h4>

@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       const data = await response.json();
       const filteredText = data.text.replace(/�/g, "").replace(input, ""); // Remove any invalid characters
       console.log(filteredText)
-      return filteredText || "fallback_word"; // Return a fallback if no valid text
+      return filteredText;
     };
 
     // Make multiple prediction calls if 'suggestion' is true
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     for (let i = 0; i < calls; i++) {
       const prediction = await fetchPredictions();
-      if (prediction.length > 0)
+      if (prediction.trim().length > 0)
         predictions.push(prediction);
     }
 
