@@ -34,7 +34,10 @@ import { Switch } from "@nextui-org/react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { FaInfoCircle } from "react-icons/fa";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 export const Navbar = () => {
+  const { theme, setTheme } = useTheme();
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   // const [notifications, setNotifications] = useState(true);
   const [locationAccess, setLocationAccess] = useState(true);
@@ -72,7 +75,7 @@ export const Navbar = () => {
         >
           <NavbarItem className="hidden sm:flex gap-2">
             <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-              <GithubIcon className="text-default-500" />
+              <GithubIcon />
             </Link>
             <FaInfoCircle className="text-[22px]" onClick={onOpen} />
           </NavbarItem>
@@ -83,7 +86,9 @@ export const Navbar = () => {
           justify="end"
         >
           <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-            <GithubIcon className="text-default-500" />
+            <GithubIcon
+              className={theme === "dark" ? "text-white" : "text-black"}
+            />
           </Link>
 
           {/* Dropdown with Settings Icon */}
