@@ -14,7 +14,7 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const suggestion = useSettingsStore((state) => state.notifications);
-  const debounceTimeout = 500; // debounce delay in ms
+  const debounceTimeout = 400; // debounce delay in ms
 
   const getLastWords = (input: string, count: number): string => {
     const words = input.trim().split(/\s+/); // Split text by spaces
@@ -42,9 +42,9 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setScales([
-        Math.random() * 1.5 + 1,
-        Math.random() * 1.5 + 1,
-        Math.random() * 1.5 + 1,
+        Math.random() * 0.5 + 1,
+        Math.random() * 0.5 + 1,
+        Math.random() * 0.5 + 1,
       ]);
     }, 500);
 
@@ -70,13 +70,13 @@ export default function Home() {
     setStreaming(false);
 
     try {
-      const inputText = getLastWords(text, 2);
+      const inputText = getLastWords(text, 1);
       const response = await fetch("api/fetch", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ input: text, suggestion }),
+        body: JSON.stringify({ input: inputText, suggestion }),
       });
 
       if (!response.ok) {
@@ -123,44 +123,49 @@ export default function Home() {
   };
 
   return (
-    <div className={fontSerif.className} ref={containerRef}>
-      <textarea
-        name="Text"
-        placeholder="Start typing..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className={style.Text}
-      />
+    <div ref={containerRef}>
+      <div className={fontSerif.className}>
+        <textarea
+          name="Text"
+          placeholder="Start typing..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className={style.Text}
+        />
+      </div>
 
       {/* Loading State */}
+
       {loading && (
-        <div className={style.voiceAnimation}>
-          {scales.map((scale, index) => (
-            <div
+        <Button
+          variant="shadow"
+          color="secondary"
+          className="flex m-auto"
+          isLoading
+        >
+          Generating
+        </Button>
+      )}
+      {/* Predictions Stream */}
+      {/* <div className={style.PredictionContainer}> */}
+      {!loading && (
+        <div className="flex m-auto flex-wrap items-center justify-center gap-4">
+          {predictions.map((word, index) => (
+            <Button
+              color="primary"
+              variant="shadow"
               key={index}
-              className={style.circle}
-              style={{ transform: `scale(${scale})` }}
-            ></div>
+              size="lg"
+              onClick={() => handleSelectPrediction(word)}
+              // className={`${style.PredictOutput} ${
+              //   streaming ? style.StreamAnimation : ""
+              // }`}
+            >
+              {word}
+            </Button>
           ))}
         </div>
       )}
-
-      {/* Predictions Stream */}
-      <div className={style.PredictionContainer}>
-        {predictions.map((word, index) => (
-          <Button
-            color="default"
-            variant="shadow"
-            key={index}
-            onClick={() => handleSelectPrediction(word)}
-            className={`${style.PredictOutput} ${
-              streaming ? style.StreamAnimation : ""
-            }`}
-          >
-            {word}
-          </Button>
-        ))}
-      </div>
     </div>
   );
 }

@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
 
     // Check the language of the input (Hindi or not)
     const isHindiLanguage = isHindi(input);
+    console.log("hindi", isHindiLanguage)
     const code = isHindiLanguage ? "hi" : "asm"; // Use 'hi' for Hindi, 'asm' for Assamese
 
     // Function to fetch predictions from the model server
@@ -34,17 +35,19 @@ export async function POST(req: NextRequest) {
       }
 
       const data = await response.json();
-      const filteredText = data.text.replace(/�/g, ""); // Remove any invalid characters
+      const filteredText = data.text.replace(/�/g, "").replace(input, ""); // Remove any invalid characters
+      console.log(filteredText)
       return filteredText || "fallback_word"; // Return a fallback if no valid text
     };
 
     // Make multiple prediction calls if 'suggestion' is true
     const predictions = [];
-    const calls = suggestion ? 4 : 1; // 4 calls if suggestion is true, otherwise 1 call
+    const calls = suggestion ? 3 : 1; // 4 calls if suggestion is true, otherwise 1 call
 
     for (let i = 0; i < calls; i++) {
       const prediction = await fetchPredictions();
-      predictions.push(prediction);
+      if (prediction.length > 0)
+        predictions.push(prediction);
     }
 
     // Return the predictions
