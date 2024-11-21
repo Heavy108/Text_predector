@@ -12,9 +12,10 @@ export default function Home() {
   const [streaming, setStreaming] = useState(false);
   const [scales, setScales] = useState([1, 1, 1]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const textAreaRef = useRef(null);
 
   const suggestion = useSettingsStore((state) => state.notifications);
-  const debounceTimeout = 400; // debounce delay in ms
+  const debounceTimeout = 1000; // debounce delay in ms
 
   const getLastWords = (input: string, count: number): string => {
     const words = input.trim().split(/\s+/); // Split text by spaces
@@ -58,6 +59,8 @@ export default function Home() {
     }
 
     const debounce = setTimeout(() => {
+      console.log("Debounce deez nuts");
+
       handlePredict();
     }, debounceTimeout);
 
@@ -118,7 +121,9 @@ export default function Home() {
   };
 
   const handleSelectPrediction = (word: string) => {
-    setText((prev) => `${prev} ${word}`.trim());
+    //@ts-ignore
+    textAreaRef.current?.focus();
+    setText((prev) => `${prev}${word}`.trim());
     setPredictions([]);
   };
 
@@ -126,6 +131,7 @@ export default function Home() {
     <div ref={containerRef}>
       <div className={fontSerif.className}>
         <textarea
+          ref={textAreaRef}
           name="Text"
           placeholder="Start typing..."
           value={text}

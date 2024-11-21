@@ -6,7 +6,7 @@ import {
   NavbarItem,
 } from "@nextui-org/navbar";
 import { HiLightBulb } from "react-icons/hi";
-
+import { motion } from "motion/react";
 import { Link } from "@nextui-org/link";
 import NextLink from "next/link";
 import { siteConfig } from "@/config/site";
@@ -35,9 +35,8 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { FaInfoCircle } from "react-icons/fa";
 import { useState } from "react";
 import { useTheme } from "next-themes";
+import { minaAssameseSerif } from "@/config/fonts";
 export const Navbar = () => {
-  const { theme, setTheme } = useTheme();
-
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   // const [notifications, setNotifications] = useState(true);
   const [locationAccess, setLocationAccess] = useState(true);
@@ -64,7 +63,9 @@ export const Navbar = () => {
               href="/"
             >
               <Logo />
-              <p className="font-bold text-inherit">riTU</p>
+              <div className="font-bold text-inherit text-2xl pt-1 ">
+                <p className={minaAssameseSerif.className}>লিপিকা</p>
+              </div>
             </NextLink>
           </NavbarBrand>
         </NavbarContent>
@@ -74,7 +75,12 @@ export const Navbar = () => {
           justify="end"
         >
           <NavbarItem className="hidden sm:flex gap-2">
-            <Link isExternal aria-label="Github" href={siteConfig.links.github}>
+            <Link
+              color="foreground"
+              isExternal
+              aria-label="Github"
+              href={siteConfig.links.github}
+            >
               <GithubIcon />
             </Link>
             <FaInfoCircle className="text-[22px]" onClick={onOpen} />
@@ -85,10 +91,13 @@ export const Navbar = () => {
           className="sm:hidden basis-1 pl-4 flex items-center gap-4"
           justify="end"
         >
-          <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-            <GithubIcon
-              className={theme === "dark" ? "text-white" : "text-black"}
-            />
+          <Link
+            color="foreground"
+            isExternal
+            aria-label="Github"
+            href={siteConfig.links.github}
+          >
+            <GithubIcon />
           </Link>
 
           {/* Dropdown with Settings Icon */}
@@ -102,11 +111,11 @@ export const Navbar = () => {
               </button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Settings" closeOnSelect={false}>
-              <DropdownItem key="darkMode">
+              <DropdownItem textValue="dark mode" key="darkMode">
                 <ThemeSwitch />
               </DropdownItem>
 
-              <DropdownItem key="notifications">
+              <DropdownItem textValue="suggestions" key="notifications">
                 <Switch
                   isSelected={notifications}
                   onValueChange={toggleNotifications}
@@ -124,7 +133,7 @@ export const Navbar = () => {
                 </Switch>
               </DropdownItem>
 
-              <DropdownItem key="location">
+              <DropdownItem textValue="riya somani" key="location">
                 <Switch
                   isSelected={locationAccess}
                   onValueChange={() =>
@@ -155,30 +164,24 @@ export const Navbar = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Project</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Members</ModalHeader>
               <ModalBody>
-                <div className="flex flex-col items-center text-center mb-4">
-                  <h3 className="text-xl font-semibold">
-                    Dr. Shobhanjana Kalita
-                  </h3>
-                  <h4 className="text-lg text-gray-500">
-                    Designation: Assistant Professor
-                  </h4>
+                <h4 className="text-lg text-gray-500">Project Guide</h4>
+                <h3 className="text-xl font-semibold">
+                  Prof. Shobhanjana Kalita
+                </h3>
+                <Divider />
+                <h4 className="text-lg text-gray-500">Developers</h4>
+                <div className="flex justify-between">
+                  <h3 className="text-lg">Satyam Sajal</h3>
+                  <h3 className="text-lg">সত্যম সজল</h3>
                 </div>
 
-                {/* Side by side layout for the other two names */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="flex flex-col items-center text-center">
-                    <h4 className="text-lg font-semibold">Satyam Sajal</h4>
-                    <p className="text-gray-500">Designation: Student</p>
-                  </div>
-                  <div className="flex flex-col items-center text-center">
-                    <h4 className="text-lg font-semibold">
-                      Aniruddha Mukherjee
-                    </h4>
-                    <p className="text-gray-500">Designation: Student</p>
-                  </div>
+                <div className="flex justify-between">
+                  <h3 className="text-lg">Aniruddha Mukherjee</h3>
+                  <h3 className="text-lg">অনিৰুদ্ধ মুখাৰ্জী</h3>
                 </div>
+                <br></br>
               </ModalBody>
             </>
           )}

@@ -2,6 +2,7 @@ import {
   Fira_Code as FontMono,
   Inter as FontSans,
   Source_Serif_4 as FontSerif,
+  Mina as Mina,
 } from "next/font/google";
 
 // Load the fonts
@@ -20,3 +21,11 @@ export const fontSerif = FontSerif({
   variable: "--font-serif",
   display: "swap",
 });
+
+export const minaAssameseSerif = Mina({
+  subsets: ["bengali"],
+  variable: "--font-mina",
+  display: "swap",
+  weight: "700",
+});
+
