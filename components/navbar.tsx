@@ -36,6 +36,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import { minaAssameseSerif } from "@/config/fonts";
+// import CuboidFlip from "./cubeani";
 export const Navbar = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   // const [notifications, setNotifications] = useState(true);
@@ -66,6 +67,7 @@ export const Navbar = () => {
               <div className="font-bold text-inherit text-2xl pt-1 ">
                 <p className={minaAssameseSerif.className}>লিপিকা</p>
               </div>
+             
             </NextLink>
           </NavbarBrand>
         </NavbarContent>
