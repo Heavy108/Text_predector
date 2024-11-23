@@ -40,19 +40,19 @@ import { minaAssameseSerif } from "@/config/fonts";
 export const Navbar = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   // const [notifications, setNotifications] = useState(true);
-  const [locationAccess, setLocationAccess] = useState(true);
+  const {romanization, toggleRomanization} = useSettingsStore();
   const { notifications, toggleNotifications } = useSettingsStore();
 
-  const handleSwitchChange = (settingName: string, currentValue: boolean) => {
-    switch (settingName) {
-      case "notifications":
-        // setNotifications(!currentValue);
-        break;
-      case "locationAccess":
-        setLocationAccess(!currentValue);
-        break;
-    }
-  };
+  // const handleSwitchChange = (settingName: string, currentValue: boolean) => {
+  //   switch (settingName) {
+  //     case "notifications":
+  //       // setNotifications(!currentValue);
+  //       break;
+  //     case "locationAccess":
+  //       toggleRomanization(!currentValue);
+  //       break;
+  //   }
+  // };
 
   return (
     <>
@@ -137,9 +137,8 @@ export const Navbar = () => {
 
               <DropdownItem textValue="riya somani" key="location">
                 <Switch
-                  isSelected={locationAccess}
-                  onValueChange={() =>
-                    handleSwitchChange("locationAccess", locationAccess)
+                  isSelected={romanization}
+                  onValueChange={toggleRomanization
                   }
                   size="lg"
                   color="success"

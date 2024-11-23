@@ -9,11 +9,11 @@ export default function Home() {
   const [text, setText] = useState("");
   const [predictions, setPredictions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [streaming, setStreaming] = useState(false);
-  const [scales, setScales] = useState([1, 1, 1]);
+  // const [streaming, setStreaming] = useState(false);
+  // const [scales, setScales] = useState([1, 1, 1]);
   const containerRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef(null);
-
+  const transliteration = useSettingsStore((state) => state.romanization);
   const suggestion = useSettingsStore((state) => state.notifications);
   const debounceTimeout = 1000; // debounce delay in ms
 
@@ -40,17 +40,17 @@ export default function Home() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setScales([
-        Math.random() * 0.5 + 1,
-        Math.random() * 0.5 + 1,
-        Math.random() * 0.5 + 1,
-      ]);
-    }, 500);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setScales([
+  //       Math.random() * 0.5 + 1,
+  //       Math.random() * 0.5 + 1,
+  //       Math.random() * 0.5 + 1,
+  //     ]);
+  //   }, 500);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   useEffect(() => {
     if (!text) {
@@ -70,7 +70,7 @@ export default function Home() {
   const handlePredict = async () => {
     setLoading(true);
     setPredictions([]);
-    setStreaming(false);
+    // setStreaming(false);
 
     try {
       const inputText = getLastWords(text, 1);
@@ -79,7 +79,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ input: inputText, suggestion }),
+        body: JSON.stringify({ input: inputText, suggestion ,transliteration}),
       });
 
       if (!response.ok) {
@@ -98,7 +98,7 @@ export default function Home() {
   };
 
   const startStreaming = (words: string[]) => {
-    setStreaming(true);
+    // setStreaming(true);
 
     let index = -1;
 
@@ -115,7 +115,7 @@ export default function Home() {
 
       if (index >= words.length) {
         clearInterval(interval);
-        setStreaming(false);
+        // setStreaming(false);
       }
     }, 500);
   };
