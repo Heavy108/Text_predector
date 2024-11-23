@@ -13,7 +13,7 @@ export default function Home() {
   // const [scales, setScales] = useState([1, 1, 1]);
   const containerRef = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef(null);
-  const transliteration = useSettingsStore((state) => state.romanization);
+  const romanization = useSettingsStore((state) => state.romanization);
   const suggestion = useSettingsStore((state) => state.notifications);
   const debounceTimeout = 1000; // debounce delay in ms
 
@@ -79,7 +79,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ input: inputText, suggestion ,transliteration}),
+        body: JSON.stringify({ input: inputText, suggestion, romanization }),
       });
 
       if (!response.ok) {
@@ -87,7 +87,7 @@ export default function Home() {
       }
 
       const data = await response.json();
-      const exampleSuggestions = data.predictions || ["word0"];
+      const exampleSuggestions = data.predictions ;
 
       setLoading(false);
       startStreaming(exampleSuggestions);
@@ -123,7 +123,13 @@ export default function Home() {
   const handleSelectPrediction = (word: string) => {
     //@ts-ignore
     textAreaRef.current?.focus();
-    setText((prev) => `${prev}${word}`.trim());
+    // setText((prev) => `${prev} ${word}`.trim());
+    setText((prev) => {
+      if (romanization) {
+        return `${word}`.trim();
+      }
+      return`${prev} ${word}`.trim(); // Keep the previous text unchanged if not Romanized
+    });
     setPredictions([]);
   };
 
