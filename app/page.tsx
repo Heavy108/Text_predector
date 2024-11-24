@@ -16,7 +16,7 @@ export default function Home() {
   const romanization = useSettingsStore((state) => state.romanization);
   const suggestion = useSettingsStore((state) => state.notifications);
   const debounceTimeout = 1000; // debounce delay in ms
-
+  const [lastromanizeWord ,setLastromainzedWord] =useState('')
   const getLastWords = (input: string, count: number): string => {
     const words = input.trim().split(/\s+/); // Split text by spaces
     return words.slice(-count).join(" "); // Get the last `count` words
@@ -74,6 +74,7 @@ export default function Home() {
 
     try {
       const inputText = getLastWords(text, 1);
+      setLastromainzedWord(inputText)
       const response = await fetch("api/fetch", {
         method: "POST",
         headers: {
@@ -126,10 +127,11 @@ export default function Home() {
     // setText((prev) => `${prev} ${word}`.trim());
     setText((prev) => {
       if (romanization) {
-        return `${word}`.trim();
+        return `${prev.replace(lastromanizeWord,"")} ${word}`.trim();
       }
       return`${prev} ${word}`.trim(); // Keep the previous text unchanged if not Romanized
     });
+    setLastromainzedWord('')
     setPredictions([]);
   };
 
