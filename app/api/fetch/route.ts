@@ -24,7 +24,7 @@ async function fetchPredictions(lang: string, input: string) {
         }
 
         const data = await response.json();
-        const filteredText = data.text.replace(input, "").replace(/�/g, "").trim(); 
+        const filteredText = data.text.replace(input, "").replace(/�/g, "").trim();
         console.log("Prediction:", filteredText);
         return filteredText;
     } catch (error) {
@@ -48,7 +48,7 @@ async function handleRomanization(input: string) {
 
         const data = await response.json();
         console.log("Romanized value:", data.text, "Language:", data.lang);
-        console.log("translitValue",data.text)
+        console.log("translitValue", data.text)
         return {
             translitValue: data.text,
             translitLang: data.lang,
@@ -71,24 +71,24 @@ export async function POST(req: NextRequest) {
 
         if (romanization) {
             const { translitValue, translitLang } = await handleRomanization(input);
-            processedInput = translitValue; 
+            processedInput = translitValue;
             lang = translitLang;
         }
 
-        
+
         const calls = suggestion ? 3 : 1;
 
         for (let i = 0; i < calls; i++) {
             const prediction = await fetchPredictions(lang, processedInput);
             const finaltext = romanization ? `${processedInput} ${prediction}` : prediction
             console.log(finaltext)
-            if (prediction.trim().length > 0) predictions.push(
-                
+            if (prediction.length > 0) predictions.push(
+
                 finaltext
             );
         }
 
-      
+
         return NextResponse.json({ predictions });
     } catch (error) {
         console.error("Error handling API request:", error);
