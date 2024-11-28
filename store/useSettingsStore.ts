@@ -12,7 +12,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   notifications: false,
   toggleNotifications: () =>
     set((state) => ({ notifications: !state.notifications })),
-  romanization: true,
+  romanization: false,
   toggleRomanization: () =>
     set((state) => ({ romanization: !state.romanization })),
 }));
